@@ -9,7 +9,7 @@ public class BrowserFactory
     public IBrowserContext Context { get; private set; } = null!;
     public IPage Page { get; private set; } = null!;
 
-    public async Task StartAsync(bool headless = true)
+    public async Task StartAsync(bool headless = false)
     {
         playwright = await Playwright.CreateAsync();
 
