@@ -1,4 +1,6 @@
-﻿using NUnit.Framework.Interfaces;
+﻿using Allure.Net.Commons;
+using Allure.Net.Commons.Attributes;
+using NUnit.Framework.Interfaces;
 using PortfolioAutomation.Core;
 
 namespace PortfolioAutomation.Tests
@@ -24,7 +26,8 @@ namespace PortfolioAutomation.Tests
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
             {
                 string testName = TestContext.CurrentContext.Test.Name;
-                await ScreenshotHelper.TakeScreenshotAsync(browser.Page, testName, "Error");
+                string screenshotPath = await ScreenshotHelper.TakeScreenshotAsync(browser.Page, testName, "Error");
+                AttachScreenshot(screenshotPath);
 
                 logger.Error($"Test {testName} falló. Screenshot tomado.");
             }
@@ -32,6 +35,12 @@ namespace PortfolioAutomation.Tests
             await browser.StopAsync();
 
             logger.Information("Browser stopped successfully.");
+        }
+
+        [AllureAttachment("Screenshot", ContentType = "image/png")]
+        public byte[] AttachScreenshot(string path)
+        {
+            return File.ReadAllBytes(path);
         }
     }
 }

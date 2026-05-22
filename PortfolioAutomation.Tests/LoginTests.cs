@@ -1,13 +1,16 @@
-﻿using PortfolioAutomation.Core;
+﻿using Allure.Net.Commons;
+using Allure.NUnit.Attributes;
+using PortfolioAutomation.Core;
 using PortfolioAutomation.Pages;
 
 namespace PortfolioAutomation.Tests;
 
 public class LoginTests : TestBase
 {
-    private BrowserFactory browser;
-
     [Test]
+    [AllureTag("smoke")]
+    [AllureOwner("fsilva")]
+    [AllureSeverity(SeverityLevel.critical)]
     public async Task Login_StandardUser_Success()
     {
         // TODO: get url from config
