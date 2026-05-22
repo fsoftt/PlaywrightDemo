@@ -2,12 +2,10 @@
 
 namespace PortfolioAutomation.Pages
 {
-    public class InventoryPage
+    public class InventoryPage : BasePage
     {
-        private readonly IPage page;
+        public InventoryPage(IPage page) : base(page) { }
 
-        public InventoryPage(IPage page) => this.page = page;
-
-        public ILocator InventoryContainer => page.Locator("#inventory_container");
+        public ILocator InventoryContainer => Page.Locator("#inventory_container");
     }
 }

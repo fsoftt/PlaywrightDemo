@@ -2,15 +2,13 @@
 
 namespace PortfolioAutomation.Pages;
 
-public class LoginPage
+public class LoginPage : BasePage
 {
-    private readonly IPage page;
+    public LoginPage(IPage page) : base(page) { }
 
-    public LoginPage(IPage page) => this.page = page;
-
-    private ILocator UsernameInput => page.Locator("#user-name");
-    private ILocator PasswordInput => page.Locator("#password");
-    private ILocator LoginButton => page.Locator("#login-button");
+    private ILocator UsernameInput => Page.Locator("#user-name");
+    private ILocator PasswordInput => Page.Locator("#password");
+    private ILocator LoginButton => Page.Locator("#login-button");
 
     public async Task LoginAsync(string username, string password)
     {

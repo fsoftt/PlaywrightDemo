@@ -1,6 +1,7 @@
 ﻿using Allure.Net.Commons;
 using Allure.NUnit.Attributes;
 using PortfolioAutomation.Core;
+using PortfolioAutomation.Flows;
 using PortfolioAutomation.Pages;
 
 namespace PortfolioAutomation.Tests;
@@ -16,12 +17,11 @@ public class LoginTests : TestBase
         // TODO: get url from config
         // TODO: move go to page to browser factory
         await browser.Page.GotoAsync("https://www.saucedemo.com/");
-        var loginPage = new LoginPage(browser.Page);
+        var loginFlow = new LoginFlow(browser.Page);
 
         // TODO: get credentials from config
-        await loginPage.LoginAsync("standard_user", "secret_sauce");
+        InventoryPage inventoryPage = await loginFlow.LoginAsAsync("standard_user", "secret_sauce");
 
-        var inventoryPage = new InventoryPage(browser.Page);
         Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
     }
 }
