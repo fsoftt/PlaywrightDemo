@@ -22,6 +22,6 @@ public class LoginTests : TestBase
         await loginPage.LoginAsync("standard_user", "secret_sauce");
 
         var inventoryPage = new InventoryPage(browser.Page);
-        Assert.That(await inventoryPage.InventoryContainer.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
+        Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
     }
 }
