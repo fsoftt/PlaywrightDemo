@@ -36,6 +36,21 @@ public class LoginTests : TestBase
         Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
     }
 
+    [TestCase(Auth.WorkingUser, Auth.Password)]
+    public async Task Login_Logout_Success(string username, string password)
+    {
+        await page.GoToHomePage();
+
+        var loginFlow = new LoginFlow(page);
+        InventoryPage inventoryPage = await loginFlow.LoginAsAsync(username, password);
+
+        Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
+
+        LoginPage loginPage = await loginFlow.LogoutAsync();
+
+        Assert.That(await loginPage.UsernameInput.IsVisibleAsync(), Is.True, "El usuario no fue redirigido a la página de login.");
+    }
+
     [TestCase("", "", "Epic sadface: Username is required")]
     [TestCase(Auth.WorkingUser, "", "Epic sadface: Password is required")]
     [TestCase(Auth.LockedUser, Auth.Password, "Epic sadface: Sorry, this user has been locked out.")]
