@@ -24,47 +24,35 @@ public class LoginTests : TestBase
         await context.CloseAsync();
     }
 
-    [Test]
-    public async Task Login_StandardUser_Success()
+    [TestCase(Auth.WorkingUser, Auth.Password)]
+    [TestCase(Auth.VisualUser, Auth.Password)]
+    public async Task Login_StandardUser_Success(string username, string password)
     {
         await page.GoToHomePage();
 
         var loginFlow = new LoginFlow(page);
-        InventoryPage inventoryPage = await loginFlow.LoginAsAsync(Auth.Username, Auth.Password);
+        InventoryPage inventoryPage = await loginFlow.LoginAsAsync(username, password);
 
         Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
     }
 
-    [Test]
-    public async Task Login_NoUserNoPassword_Failure()
+    [TestCase("", "", "Epic sadface: Username is required")]
+    [TestCase(Auth.WorkingUser, "", "Epic sadface: Password is required")]
+    [TestCase(Auth.LockedUser, Auth.Password, "Epic sadface: Sorry, this user has been locked out.")]
+    [TestCase(Auth.FakeUser, Auth.Password, "Epic sadface: Username and password do not match any user in this service")]
+    public async Task Login_Failure(string username, string password, string errorMessage)
     {
         await page.GoToHomePage();
 
         var loginFlow = new LoginFlow(page);
-        await loginFlow.LoginAsAsync(string.Empty, string.Empty);
+        await loginFlow.LoginAsAsync(username, password);
 
 
         Assert.Multiple(async () =>
         {
             var loginPage = new LoginPage(page);
             Assert.That(await loginPage.ErrorMessage.IsVisibleAsync(), Is.True, "Error message is not visible.");
-            Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo("Epic sadface: Username is required"), "Error message is not correct.");
-        });
-    }
-
-    [Test]
-    public async Task Login_NoPassword_Failure()
-    {
-        await page.GoToHomePage();
-
-        var loginFlow = new LoginFlow(page);
-        await loginFlow.LoginAsAsync(Auth.Username, string.Empty);
-
-        Assert.Multiple(async () =>
-        {
-            var loginPage = new LoginPage(page);
-            Assert.That(await loginPage.ErrorMessage.IsVisibleAsync(), Is.True, "Error message is not visible.");
-            Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo("Epic sadface: Password is required"), "Error message is not correct.");
+            Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo(errorMessage), "Error message is not correct.");
         });
     }
 }
