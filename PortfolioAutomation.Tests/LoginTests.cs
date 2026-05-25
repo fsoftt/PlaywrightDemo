@@ -26,7 +26,7 @@ public class LoginTests : TestBase
 
     [TestCase(Auth.WorkingUser, Auth.Password)]
     [TestCase(Auth.VisualUser, Auth.Password)]
-    public async Task Login_StandardUser_Success(string username, string password)
+    public async Task Login_WhenCorrectUser_Success(string username, string password)
     {
         await page.GoToHomePage();
 
@@ -55,7 +55,7 @@ public class LoginTests : TestBase
     [TestCase(Auth.WorkingUser, "", "Epic sadface: Password is required")]
     [TestCase(Auth.LockedUser, Auth.Password, "Epic sadface: Sorry, this user has been locked out.")]
     [TestCase(Auth.FakeUser, Auth.Password, "Epic sadface: Username and password do not match any user in this service")]
-    public async Task Login_Failure(string username, string password, string errorMessage)
+    public async Task Login_WhenWrongUser_Fails(string username, string password, string errorMessage)
     {
         await page.GoToHomePage();
 
@@ -69,5 +69,21 @@ public class LoginTests : TestBase
             Assert.That(await loginPage.ErrorMessage.IsVisibleAsync(), Is.True, "Error message is not visible.");
             Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo(errorMessage), "Error message is not correct.");
         });
+    }
+
+    [TestCase(Auth.WorkingUser, Auth.Password)]
+    public async Task Login_WhenRefresh_MaintainsSession(string username, string password)
+    {
+        await page.GoToHomePage();
+
+        var loginFlow = new LoginFlow(page);
+        InventoryPage inventoryPage = await loginFlow.LoginAsAsync(username, password);
+
+        Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
+
+        await page.ReloadAsync();
+
+        Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "La sesión no fue mantenida después de recargar la página.");
+
     }
 }
