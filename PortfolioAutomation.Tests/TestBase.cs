@@ -14,6 +14,24 @@ namespace PortfolioAutomation.Tests
         protected IPage page = null!;
         protected IBrowserContext context = null!;
 
+        [SetUp]
+        public virtual async Task Setup()
+        {
+            context = await GlobalPlaywrightSetup.Browser.NewContextAsync();
+            page = await context.NewPageAsync();
+        }
+
+        [TearDown]
+        public virtual async Task TearDown()
+        {
+            await ScreenshotIfFailed();
+
+            if (context != null)
+            {
+                await context.CloseAsync();
+            }
+        }
+
         protected async Task ScreenshotIfFailed()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
