@@ -2,6 +2,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\PortfolioAutomation.Core\PortfolioAutomation.Core.csproj" />
+    <ProjectReference Include="..\PortfolioAutomation.Models\PortfolioAutomation.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

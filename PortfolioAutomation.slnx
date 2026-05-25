@@ -2,6 +2,7 @@
   <Folder Name="/Solution Items/" />
   <Project Path="PortfolioAutomation.Core/PortfolioAutomation.Core.csproj" />
   <Project Path="PortfolioAutomation.Flows/PortfolioAutomation.Flows.csproj" />
+  <Project Path="PortfolioAutomation.Models/PortfolioAutomation.Models.csproj" />
   <Project Path="PortfolioAutomation.Pages/PortfolioAutomation.Pages.csproj" />
   <Project Path="PortfolioAutomation.TestData/PortfolioAutomation.TestData.csproj" />
   <Project Path="PortfolioAutomation.Tests/PortfolioAutomation.Tests.csproj" />

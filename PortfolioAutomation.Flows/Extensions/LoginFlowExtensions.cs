@@ -7,7 +7,7 @@ namespace PortfolioAutomation.Flows.Extensions
 {
     public static class LoginFlowExtensions
     {
-        public static async Task<InventoryPage> Login(this IPage page)
+        public static async Task<InventoryPage> LoginAsync(this IPage page)
         {
             await page.GoToHomePage();
 

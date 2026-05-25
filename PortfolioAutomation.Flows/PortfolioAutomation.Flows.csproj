@@ -4,6 +4,7 @@
     <ProjectReference Include="..\PortfolioAutomation.Pages\PortfolioAutomation.Pages.csproj" />
     <ProjectReference Include="..\PortfolioAutomation.Core\PortfolioAutomation.Core.csproj" />
     <ProjectReference Include="..\PortfolioAutomation.TestData\PortfolioAutomation.TestData.csproj" />
+    <ProjectReference Include="..\PortfolioAutomation.Models\PortfolioAutomation.Models.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
