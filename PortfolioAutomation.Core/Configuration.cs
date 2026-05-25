@@ -4,15 +4,21 @@ namespace PortfolioAutomation.Core
 {
     public class Configuration
     {
-        private readonly static object lockObject = new();
-        private static IConfigurationRoot configuration;
+        private readonly static Lock lockObject = new();
+        private readonly static IConfigurationRoot configuration;
 
         static Configuration()
         {
+            if (configuration != null)
+            {
+                return;
+            }
+
+            string filePath = Environment.GetEnvironmentVariable("CONFIG_FILE_PATH") ?? "appsettings.json";
+
             var builder = new ConfigurationBuilder()
                 .SetBasePath(Directory.GetCurrentDirectory())
-                // TODO: settings should be variable
-                .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+                .AddJsonFile(filePath, optional: false, reloadOnChange: true);
 
             lock (lockObject)
             {
