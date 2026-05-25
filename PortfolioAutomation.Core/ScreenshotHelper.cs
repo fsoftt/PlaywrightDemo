@@ -4,9 +4,10 @@ namespace PortfolioAutomation.Core
 {
     public static class ScreenshotHelper
     {
-        public static async Task<string> TakeScreenshotAsync(IPage page, string testName, string step = null)
+        public static async Task<string> TakeScreenshotAsync(IPage page, string testName, string step = "Step")
         {
-            string screenshotsDir = Path.Combine(Directory.GetCurrentDirectory(), "Screenshots");
+            string screenshotsPath = Configuration.Get("ScreenshotsPath");
+            string screenshotsDir = Path.Combine(Directory.GetCurrentDirectory(), screenshotsPath);
             if (!Directory.Exists(screenshotsDir))
             {
                 Directory.CreateDirectory(screenshotsDir);
@@ -26,7 +27,7 @@ namespace PortfolioAutomation.Core
         private static string GetFilePath(string testName, string step, string screenshotsDir)
         {
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
-            string fileName = $"{testName}_{step ?? "Step"}_{timestamp}.png";
+            string fileName = $"{testName}_{step}_{timestamp}.png";
             string filePath = Path.Combine(screenshotsDir, fileName);
 
             return filePath;

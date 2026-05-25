@@ -2,7 +2,7 @@
 
 namespace PortfolioAutomation.Pages
 {
-    public class InventoryPage : BasePage
+    public class InventoryPage : PageBase
     {
         public InventoryPage(IPage page) : base(page) { }
 

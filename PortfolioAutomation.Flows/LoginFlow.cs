@@ -3,7 +3,7 @@ using PortfolioAutomation.Pages;
 
 namespace PortfolioAutomation.Flows;
 
-public class LoginFlow
+public class LoginFlow : FlowBase
 {
     private readonly LoginPage loginPage;
 

@@ -2,7 +2,7 @@
 
 namespace PortfolioAutomation.Pages;
 
-public class LoginPage : BasePage
+public class LoginPage : PageBase
 {
     public LoginPage(IPage page) : base(page) { }
 
@@ -13,6 +13,8 @@ public class LoginPage : BasePage
 
     public async Task LoginAsync(string username, string password)
     {
+        logger.Information($"Logging in as {username}");
+
         await UsernameInput.FillAsync(username);
         await PasswordInput.FillAsync(password);
 

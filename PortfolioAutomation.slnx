@@ -1,4 +1,7 @@
 <Solution>
+  <Folder Name="/Solution Items/">
+    <File Path=".editorconfig" />
+  </Folder>
   <Project Path="PortfolioAutomation.Core/PortfolioAutomation.Core.csproj" />
   <Project Path="PortfolioAutomation.Flows/PortfolioAutomation.Flows.csproj" />
   <Project Path="PortfolioAutomation.Pages/PortfolioAutomation.Pages.csproj" />

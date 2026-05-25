@@ -1,14 +1,17 @@
 ﻿using Microsoft.Playwright;
+using PortfolioAutomation.Core;
 
 namespace PortfolioAutomation.Pages
 {
-    public abstract class BasePage
+    public abstract class PageBase
     {
         public readonly IPage Page;
+        protected Logger logger;
 
-        protected BasePage(IPage page)
+        protected PageBase(IPage page)
         {
             Page = page;
+            logger = Logger.Get();
         }
 
         public virtual async Task WaitForPageLoadAsync()
