@@ -6,6 +6,7 @@ namespace PortfolioAutomation.Core
     {
         private static Logger? logger;
         private static bool initialized = false;
+        private static readonly object lockObject = new object();
 
         public static Logger Get()
         {
@@ -23,7 +24,10 @@ namespace PortfolioAutomation.Core
 
             initialized = true;
 
-            logger = new Logger();
+            lock (lockObject)
+            {
+                logger = new Logger();
+            }
 
             return logger;
         }

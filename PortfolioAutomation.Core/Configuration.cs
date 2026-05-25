@@ -4,6 +4,7 @@ namespace PortfolioAutomation.Core
 {
     public class Configuration
     {
+        private readonly static object lockObject = new();
         private static IConfigurationRoot configuration;
 
         static Configuration()
@@ -13,7 +14,10 @@ namespace PortfolioAutomation.Core
                 // TODO: settings should be variable
                 .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
 
-            configuration = builder.Build();
+            lock (lockObject)
+            {
+                configuration ??= builder.Build();
+            }
         }
 
         public static string Get(string key) => configuration[key] ?? string.Empty;

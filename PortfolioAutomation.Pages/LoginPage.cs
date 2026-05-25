@@ -9,6 +9,7 @@ public class LoginPage : BasePage
     private ILocator UsernameInput => Page.Locator("#user-name");
     private ILocator PasswordInput => Page.Locator("#password");
     private ILocator LoginButton => Page.Locator("#login-button");
+    public ILocator ErrorMessage => Page.Locator("[data-test='error']");
 
     public async Task LoginAsync(string username, string password)
     {

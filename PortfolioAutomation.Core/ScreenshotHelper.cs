@@ -28,6 +28,7 @@ namespace PortfolioAutomation.Core
             string timestamp = DateTime.Now.ToString("yyyyMMdd_HHmmss");
             string fileName = $"{testName}_{step ?? "Step"}_{timestamp}.png";
             string filePath = Path.Combine(screenshotsDir, fileName);
+
             return filePath;
         }
     }
