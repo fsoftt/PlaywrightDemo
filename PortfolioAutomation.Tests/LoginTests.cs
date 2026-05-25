@@ -10,20 +10,6 @@ namespace PortfolioAutomation.Tests;
 [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
 public class LoginTests : TestBase
 {
-    [SetUp]
-    public async Task Setup()
-    {
-        context = await browser.NewContextAsync();
-        page = await context.NewPageAsync();
-    }
-
-    [TearDown]
-    public async Task TearDown()
-    {
-        await ScreenshotIfFailed();
-        await context.CloseAsync();
-    }
-
     [TestCase(Auth.WorkingUser, Auth.Password)]
     [TestCase(Auth.VisualUser, Auth.Password)]
     public async Task Login_WhenCorrectUser_Success(string username, string password)

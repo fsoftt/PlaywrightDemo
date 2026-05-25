@@ -14,21 +14,6 @@ namespace PortfolioAutomation.Tests
     [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     public class InventoryTests : TestBase
     {
-        // TODO: move this to base class and make it overridable
-        [SetUp]
-        public async Task Setup()
-        {
-            context = await browser.NewContextAsync();
-            page = await context.NewPageAsync();
-        }
-
-        [TearDown]
-        public async Task TearDown()
-        {
-            await ScreenshotIfFailed();
-            await context.CloseAsync();
-        }
-
         public async Task Inventory_HasElements()
         {
             Assert.That(true, Is.True);
