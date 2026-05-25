@@ -34,20 +34,6 @@ namespace PortfolioAutomation.Tests
             playwright.Dispose();
         }
 
-        [SetUp]
-        public virtual async Task Setup()
-        {
-            context = await browser.NewContextAsync();
-            page = await context.NewPageAsync();
-        }
-
-        [TearDown]
-        public virtual async Task TearDown()
-        {
-            await ScreenshotIfFailed();
-            await context.CloseAsync();
-        }
-
         protected async Task ScreenshotIfFailed()
         {
             if (TestContext.CurrentContext.Result.Outcome.Status == TestStatus.Failed)
