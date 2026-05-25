@@ -1,4 +1,5 @@
 ﻿using PortfolioAutomation.Flows.Extensions;
+using PortfolioAutomation.Models.Models;
 using PortfolioAutomation.Pages.Pages;
 
 namespace PortfolioAutomation.Tests
@@ -25,25 +26,48 @@ namespace PortfolioAutomation.Tests
         [Test]
         public async Task Inventory_WhenOrderedAlphabetically_AreCorrectlyOrdered()
         {
-            Assert.That(true, Is.True);
+            InventoryPage inventoryPage = await page.LoginAsync();
+
+            IEnumerable<Product> products = await inventoryPage.GetInventoryItems();
+
+            Assert.That(products, Is.Not.Empty, "No se encontraron productos en el inventario.");
+            Assert.That(products, Is.Ordered.By("Name"), "Los elementos no están ordenados alfabéticamente.");
         }
 
         [Test]
         public async Task Inventory_WhenOrderedAlphabeticallyDescending_AreCorrectlyOrdered()
         {
-            Assert.That(true, Is.True);
+            InventoryPage inventoryPage = await page.LoginAsync();
+            await inventoryPage.SortBy(SortOptions.NameDesc);
+
+            IEnumerable<Product> products = await inventoryPage.GetInventoryItems();
+
+            Assert.That(products, Is.Not.Empty, "No se encontraron productos en el inventario.");
+            Assert.That(products, Is.Ordered.Descending.By("Name"), "Los elementos no están ordenados alfabéticamente.");
         }
 
         [Test]
         public async Task Inventory_WhenOrderedByPrice_AreCorrectlyOrdered()
         {
-            Assert.That(true, Is.True);
+            InventoryPage inventoryPage = await page.LoginAsync();
+            await inventoryPage.SortBy(SortOptions.PriceAsc);
+
+            IEnumerable<Product> products = await inventoryPage.GetInventoryItems();
+
+            Assert.That(products, Is.Not.Empty, "No se encontraron productos en el inventario.");
+            Assert.That(products, Is.Ordered.By("Price"), "Los elementos no están ordenados por precio.");
         }
 
         [Test]
         public async Task Inventory_WhenOrderedByPriceDescending_AreCorrectlyOrdered()
         {
-            Assert.That(true, Is.True);
+            InventoryPage inventoryPage = await page.LoginAsync();
+            await inventoryPage.SortBy(SortOptions.PriceDesc);
+
+            IEnumerable<Product> products = await inventoryPage.GetInventoryItems();
+
+            Assert.That(products, Is.Not.Empty, "No se encontraron productos en el inventario.");
+            Assert.That(products, Is.Ordered.Descending.By("Price"), "Los elementos no están ordenados por precio.");
         }
 
         [Test]

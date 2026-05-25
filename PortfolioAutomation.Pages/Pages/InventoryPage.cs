@@ -14,9 +14,18 @@ namespace PortfolioAutomation.Pages.Pages
 
         public InventoryPage(IPage page) : base(page) { }
 
-        public async Task SortBy(string sortOption)
+        public async Task SortBy(SortOptions sortOption)
         {
-            await SortSelect.SelectOptionAsync(new SelectOptionValue { Label = sortOption });
+            string optionLabel = sortOption switch
+            {
+                SortOptions.NameAsc => "Name (A to Z)",
+                SortOptions.NameDesc => "Name (Z to A)",
+                SortOptions.PriceAsc => "Price (low to high)",
+                SortOptions.PriceDesc => "Price (high to low)",
+                _ => throw new ArgumentOutOfRangeException(nameof(sortOption), $"Unsupported sort option: {sortOption}")
+            };
+
+            await SortSelect.SelectOptionAsync(new SelectOptionValue { Label = optionLabel });
         }
 
         public async Task<int> GetInventoryItemCount()
