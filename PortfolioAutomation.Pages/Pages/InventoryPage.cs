@@ -1,6 +1,6 @@
 ﻿using Microsoft.Playwright;
 
-namespace PortfolioAutomation.Pages
+namespace PortfolioAutomation.Pages.Pages
 {
     public class InventoryPage : PageBase
     {

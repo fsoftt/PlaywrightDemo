@@ -1,5 +1,5 @@
 ﻿using Microsoft.Playwright;
-using PortfolioAutomation.Pages;
+using PortfolioAutomation.Pages.Pages;
 
 namespace PortfolioAutomation.Flows;
 

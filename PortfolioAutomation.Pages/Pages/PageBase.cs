@@ -1,7 +1,7 @@
 ﻿using Microsoft.Playwright;
 using PortfolioAutomation.Core;
 
-namespace PortfolioAutomation.Pages
+namespace PortfolioAutomation.Pages.Pages
 {
     public abstract class PageBase
     {

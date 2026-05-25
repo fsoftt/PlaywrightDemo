@@ -1,6 +1,6 @@
 ﻿using PortfolioAutomation.Core.Extensions;
 using PortfolioAutomation.Flows;
-using PortfolioAutomation.Pages;
+using PortfolioAutomation.Pages.Pages;
 using PortfolioAutomation.TestData;
 
 namespace PortfolioAutomation.Tests;
