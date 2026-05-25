@@ -15,15 +15,22 @@ namespace PortfolioAutomation.Core
 
             string filePath = GetFilePath(testName, step, screenshotsDir);
 
-            byte[] bytes = await page.ScreenshotAsync(new PageScreenshotOptions
+            try
             {
-                Path = filePath,
-                FullPage = true
-            });
+                byte[] bytes = await page.ScreenshotAsync(new PageScreenshotOptions
+                {
+                    Path = filePath,
+                    FullPage = true
+                });
 
-            await File.WriteAllBytesAsync(filePath, bytes);
+                await File.WriteAllBytesAsync(filePath, bytes);
 
-            return filePath;
+                return filePath;
+            }
+            catch (Exception)
+            {
+                return string.Empty;
+            }
         }
 
         private static string GetFilePath(string testName, string step, string screenshotsDir)

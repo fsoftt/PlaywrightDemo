@@ -14,7 +14,7 @@ public class LoginTests : TestBase
     [SetUp]
     public async Task Setup()
     {
-        context = await browser.NewContextAsync();
+        context = await GlobalPlaywrightSetup.Browser.NewContextAsync(); 
         page = await context.NewPageAsync();
     }
 

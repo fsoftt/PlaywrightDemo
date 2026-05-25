@@ -8,11 +8,10 @@ namespace PortfolioAutomation.Tests
     [FixtureLifeCycle(LifeCycle.InstancePerTestCase)]
     public class InventoryTests : TestBase
     {
-
         [SetUp]
         public async Task Setup()
         {
-            context = await browser.NewContextAsync();
+            context = await GlobalPlaywrightSetup.Browser.NewContextAsync();
             page = await context.NewPageAsync();
         }
 
@@ -20,7 +19,11 @@ namespace PortfolioAutomation.Tests
         public async Task TearDown()
         {
             await ScreenshotIfFailed();
-            await context.CloseAsync();
+
+            if (context != null)
+            {
+                await context.CloseAsync();
+            }
         }
 
         [Test]
