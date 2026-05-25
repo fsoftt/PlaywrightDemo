@@ -1,5 +1,7 @@
-﻿using PortfolioAutomation.Flows;
+﻿using PortfolioAutomation.Core.Extensions;
+using PortfolioAutomation.Flows;
 using PortfolioAutomation.Pages;
+using PortfolioAutomation.TestData;
 
 namespace PortfolioAutomation.Tests;
 
@@ -18,19 +20,17 @@ public class LoginTests : TestBase
     [TearDown]
     public async Task TearDown()
     {
+        await ScreenshotIfFailed();
         await context.CloseAsync();
     }
 
     [Test]
     public async Task Login_StandardUser_Success()
     {
-        // TODO: get url from config
-        // TODO: move go to page to browser factory
-        await page.GotoAsync("https://www.saucedemo.com/");
-        var loginFlow = new LoginFlow(page);
+        await page.GoToHomePage();
 
-        // TODO: get credentials from config
-        InventoryPage inventoryPage = await loginFlow.LoginAsAsync("standard_user", "secret_sauce");
+        var loginFlow = new LoginFlow(page);
+        InventoryPage inventoryPage = await loginFlow.LoginAsAsync(Auth.Username, Auth.Password);
 
         Assert.That(await inventoryPage.InventoryContainer.First.IsVisibleAsync(), Is.True, "El usuario no fue redirigido al inventario.");
     }
@@ -38,18 +38,15 @@ public class LoginTests : TestBase
     [Test]
     public async Task Login_NoUserNoPassword_Failure()
     {
-        // TODO: get url from config
-        // TODO: move go to page to browser factory
-        await page.GotoAsync("https://www.saucedemo.com/");
-        var loginFlow = new LoginFlow(page);
+        await page.GoToHomePage();
 
-        // TODO: get credentials from config
+        var loginFlow = new LoginFlow(page);
         await loginFlow.LoginAsAsync(string.Empty, string.Empty);
 
-        var loginPage = new LoginPage(page);
 
         Assert.Multiple(async () =>
         {
+            var loginPage = new LoginPage(page);
             Assert.That(await loginPage.ErrorMessage.IsVisibleAsync(), Is.True, "Error message is not visible.");
             Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo("Epic sadface: Username is required"), "Error message is not correct.");
         });
@@ -58,18 +55,14 @@ public class LoginTests : TestBase
     [Test]
     public async Task Login_NoPassword_Failure()
     {
-        // TODO: get url from config
-        // TODO: move go to page to browser factory
-        await page.GotoAsync("https://www.saucedemo.com/");
+        await page.GoToHomePage();
+
         var loginFlow = new LoginFlow(page);
-
-        // TODO: get credentials from config
-        await loginFlow.LoginAsAsync("standard_user", string.Empty);
-
-        var loginPage = new LoginPage(page);
+        await loginFlow.LoginAsAsync(Auth.Username, string.Empty);
 
         Assert.Multiple(async () =>
         {
+            var loginPage = new LoginPage(page);
             Assert.That(await loginPage.ErrorMessage.IsVisibleAsync(), Is.True, "Error message is not visible.");
             Assert.That(await loginPage.ErrorMessage.TextContentAsync(), Is.EqualTo("Epic sadface: Password is required"), "Error message is not correct.");
         });
